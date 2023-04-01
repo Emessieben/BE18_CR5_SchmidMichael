@@ -1,13 +1,13 @@
 <?php
-
-
-function file_upload($picture, $source = 'user')
+function file_upload($picture, $src = "user")
 {
     $result = new stdClass(); //this object will carry status from file upload
     $result->fileName = 'avatar.png';
-    if (isset($_SESSION['adm'])) {
+
+    if($src == "animal"){
         $result->fileName = 'animal.png';
     }
+
     $result->error = 1; //it could also be a boolean true/false
     //collect data from object $picture
     $fileName = $picture["name"];
@@ -23,12 +23,11 @@ function file_upload($picture, $source = 'user')
     } else {
         if (in_array($fileExtension, $filesAllowed)) {
             if ($fileError === 0) {
-                if ($fileSize < 5000000) { //500kb this number is in bytes
+                if ($fileSize < 50000000) { //500kb this number is in bytes
                     //it gives a file name based microseconds
                     $fileNewName = uniqid('') . "." . $fileExtension; // 1233343434.jpg i.e
-                    if ($source == 'animal') {
-                        $destination = "../animals/pictures/$fileNewName";
-                    } elseif ($source == 'user') {
+                    $destination = "pictures/$fileNewName";
+                    if($src == "animal"){
                         $destination = "pictures/$fileNewName";
                     }
                     if (move_uploaded_file($fileTmpName, $destination)) {
@@ -53,3 +52,17 @@ function file_upload($picture, $source = 'user')
         }
     }
 }
+// {
+//     $result = new stdClass();
+//     $result->error = 1;
+//     $fileName = $picture["name"];
+//     $fileExtension = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+//     $fileNewName = uniqid("") . "." . $fileExtension;
+//     $fileTempName = $picture["tmp_name"];
+//     $to = "../animals/pictures/$fileName";
+//     if(move_uploaded_file($fileTempName, $to)){
+//         $result->error = false;
+//         $result->fileName = $fileNewName;
+//         return $result;
+//     }
+// }

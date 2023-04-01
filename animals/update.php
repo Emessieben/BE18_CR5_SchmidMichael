@@ -55,7 +55,10 @@ mysqli_close($connect);
 <html>
 
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit <?= $toUpdate["name"] ?></title>
+    <!-- Bootstrap -->
     <?php require_once '../components/bootstrap.php' ?>
 </head>
 

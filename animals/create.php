@@ -23,11 +23,11 @@ if (isset($_POST["submit"])) {
     $vaccinated = $_POST["vaccinated"];
     $breed = $_POST["breed"];
     $status = $_POST["status"];
-    $picture = file_upload($_FILES["picture"], "animal");
+    $picture = file_upload($_FILES["picture"],$src = "animal");
 
     $sql = "INSERT INTO `animals`(`picture`, `location`, `description`, `size`, `age`, `vaccinated`, `breed`, `status`, `name`) 
     VALUES ('$picture->fileName','$location','$description','$size','$age','$vaccinated','$breed','$status','$name')";
-
+    // var_dump($picture);
     // alerts Success/Error
     if (mysqli_query($connect, $sql)) {
         $message = "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
@@ -50,6 +50,7 @@ mysqli_close($connect);
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Add Animal</title>
+    <!-- Bootstrap -->
     <?php require_once '../components/bootstrap.php' ?>
 </head>
 
@@ -57,7 +58,7 @@ mysqli_close($connect);
 <div class="container w-75">
     <fieldset class="border rounded p-3 m-3 bg-light">
         <legend class='text-center fs-1 fw-bold'>Add Animal</legend>
-        <form method="post" enctype="multipart/form-data">
+        <form action="create.php" method="post" enctype="multipart/form-data">
             <table class='table'>
                 <tr>
                     <th>Name</th>
